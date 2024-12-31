@@ -1,0 +1,1076 @@
+/* Basis-Setup */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+.tv-container {
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Video-Player */
+.tv-screen {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+}
+
+.video-player {
+  width: 100%;
+  height: 100%;
+}
+
+.video-player iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  pointer-events: none; /* Verhindert Interaktion mit dem Player */
+}
+
+/* Neues Control Panel Design */
+.control-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(20px);
+  padding: 16px 24px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 24px;
+  align-items: center;
+  z-index: 1000;
+  transform: translateY(calc(100% - 8px));
+  transition: transform 0.3s ease;
+}
+
+.control-bar:hover,
+.control-bar:focus-within,
+.control-bar.active {
+  transform: translateY(0);
+}
+
+/* Indicator Bar */
+.control-bar::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+/* Channel Controls */
+.channel-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.channel-controls button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 20px;
+  padding: 8px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Center Controls */
+.center-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Volume Control */
+.volume-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+.volume-control button {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  padding: 4px;
+}
+
+/* Modernerer Slider */
+.volume-control input[type="range"] {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  outline: none;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.volume-control input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Right Controls */
+.right-controls {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.right-controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 8px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* Hover Effects */
+.control-bar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.power-button.off {
+  color: #ef4444;
+}
+
+/* Mobile Optimierungen */
+@media (max-width: 768px) {
+  .control-bar {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .control-bar:hover,
+  .control-bar:focus-within {
+    transform: translateY(100%);
+  }
+
+  .control-bar.visible {
+    transform: translateY(0);
+  }
+
+  .control-bar::before {
+    display: none;
+  }
+
+  .volume-control {
+    padding: 6px 12px;
+  }
+
+  .volume-control input[type="range"] {
+    width: 60px;
+  }
+
+  .right-controls button,
+  .channel-controls button {
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+}
+
+/* Landscape Mode */
+@media (max-height: 500px) {
+  .control-bar {
+    transform: translateY(0);
+    padding: 8px 16px;
+  }
+
+  .control-bar button {
+    padding: 6px;
+  }
+}
+
+/* Moderner Teletext */
+.teletext-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 40px;
+  z-index: 2;
+  font-family: 'Inter', monospace;
+  letter-spacing: -0.02em;
+}
+
+.teletext-content {
+  max-width: 800px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.teletext-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.channel-name {
+  font-size: 28px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.current-time {
+  font-size: 16px;
+  color: #00f0ff;
+  font-family: monospace;
+}
+
+.current-program {
+  margin-bottom: 40px;
+  background: rgba(0, 240, 255, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.current-program h3 {
+  color: #00f0ff;
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.program-timeline {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.program-timeline h3 {
+  color: #00f0ff;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.program-item {
+  display: flex;
+  gap: 20px;
+  padding: 12px 16px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  transition: all 0.2s ease;
+}
+
+.program-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.program-item.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-left: 3px solid #00f0ff;
+}
+
+.program-time {
+  min-width: 60px;
+  color: #00f0ff;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+.program-title {
+  flex: 1;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.program-item.active .program-title {
+  color: #fff;
+  font-weight: 500;
+}
+
+/* Power-Off Effekt */
+.powered-off {
+  animation: tvOff 0.5s ease-in-out forwards;
+}
+
+.powered-off::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #000;
+  z-index: 100;
+  opacity: 0;
+  animation: fadeToBlack 0.5s ease-in-out forwards;
+}
+
+/* Füge diese Styles hinzu */
+.player-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.player-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.players-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.video-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.video-controls button {
+  background: rgba(0, 240, 255, 0.1);
+  border: 1px solid rgba(0, 240, 255, 0.3);
+  color: #00f0ff;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  letter-spacing: 0.02em;
+}
+
+.video-controls button:hover {
+  background: rgba(0, 240, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.video-controls button:active {
+  transform: translateY(0);
+}
+
+.current-video-info {
+  margin: 20px 0;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #00f0ff;
+  transition: width 0.3s linear;
+}
+
+.time-info {
+  display: flex;
+  justify-content: space-between;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+  font-family: monospace;
+}
+
+/* Fullscreen Styles */
+.tv-container:fullscreen {
+  background: black;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Mobile Optimierungen */
+@media (max-width: 768px) {
+  .tv-container {
+    height: 100dvh; /* Dynamic viewport height */
+  }
+
+  .player-container {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .player-container iframe {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Channel Overlay */
+.channel-info-overlay {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  color: white;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.channel-info-overlay.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.channel-number {
+  font-family: 'VT323', monospace;
+  font-size: 48px;
+  color: #00f0ff;
+  margin-bottom: 8px;
+}
+
+.channel-name-display {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.channel-description {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Channel Change Animation */
+.channel-container {
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.channel-container.changing {
+  transform: scale(0.98);
+  opacity: 0;
+}
+
+/* Static Effect Overlay */
+.static-overlay {
+  position: absolute;
+  inset: 0;
+  background: url('/static-noise.png');
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes tvOff {
+  0% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  20% {
+    transform: scale(0.98);
+    filter: brightness(0.8) contrast(2);
+  }
+  100% {
+    transform: scale(0.96);
+    filter: brightness(0);
+  }
+}
+
+@keyframes fadeToBlack {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Füge einen "Ausgeschaltet" Indikator hinzu */
+.power-indicator {
+  display: none;
+}
+
+/* Anpassungen für die SVG Icons */
+.control-bar button svg {
+  width: 20px;
+  height: 20px;
+  transition: all 0.2s ease;
+}
+
+.control-bar button:hover svg {
+  transform: scale(1.1);
+}
+
+.power-button.off svg {
+  stroke: #ef4444;
+}
+
+/* Verbesserte Hover-Effekte */
+.control-bar button:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.control-bar button:active svg {
+  transform: scale(0.9);
+}
+
+.volume-control button svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Füge diese Styles hinzu */
+.control-grip {
+  display: none;
+  position: fixed;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 4px 12px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  z-index: 1001;
+}
+
+.control-grip svg {
+  width: 20px;
+  height: 12px;
+  stroke: rgba(255, 255, 255, 0.6);
+}
+
+/* Verhindere Video-Interaktion */
+.channel-container {
+  pointer-events: none;
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+  .control-bar {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    padding: 12px 16px;
+    gap: 12px;
+  }
+
+  .control-bar:hover,
+  .control-bar:focus-within {
+    transform: translateY(100%);
+  }
+
+  .control-bar.visible {
+    transform: translateY(0);
+  }
+
+  .control-grip {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(10px);
+    padding: 8px;
+    border-radius: 0;
+    text-align: center;
+    z-index: 1001;
+  }
+
+  .control-grip svg {
+    width: 32px;
+    height: 16px;
+    stroke: rgba(255, 255, 255, 0.6);
+    transition: transform 0.3s ease;
+  }
+
+  .control-grip.active svg {
+    transform: rotate(180deg);
+  }
+
+  /* Verbesserte Touch-Targets */
+  .control-bar button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .volume-control {
+    padding: 8px;
+  }
+
+  .volume-control input[type="range"] {
+    width: 80px;
+  }
+}
+
+/* Verbesserte Mobile Styles */
+@media (max-width: 768px) {
+  /* Teletext Mobile Optimierung */
+  .teletext-overlay {
+    padding: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .teletext-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 16px 120px 16px; /* Erhöhter Bottom-Padding */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .teletext-header {
+    position: sticky;
+    top: 0;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 16px;
+    margin: -20px -16px 20px -16px; /* Negative margins zum Ausgleich des Paddings */
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .program-list {
+    padding-bottom: 80px; /* Extra Padding am Ende der Liste */
+  }
+
+  /* Verbesserte Touch-Targets */
+  .program-item {
+    padding: 12px;
+    min-height: 44px;
+  }
+
+  .video-controls button {
+    padding: 8px 16px;
+    height: 40px;
+    min-width: 100px;
+  }
+
+  .channel-name {
+    font-size: 20px;
+  }
+
+  .current-time {
+    font-size: 14px;
+  }
+
+  .current-program {
+    margin-bottom: 20px;
+    padding: 16px;
+  }
+
+  .program-timeline {
+    padding: 16px;
+  }
+
+  .program-item {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .program-time {
+    min-width: 50px;
+    font-size: 12px;
+  }
+
+  .program-title {
+    font-size: 12px;
+  }
+
+  /* Channel Info Overlay Mobile Anpassung */
+  .channel-info-overlay {
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    padding: 16px;
+  }
+
+  .channel-number {
+    font-size: 36px;
+  }
+
+  .channel-name-display {
+    font-size: 18px;
+  }
+
+  .channel-description {
+    font-size: 12px;
+  }
+
+  /* Control Bar Mobile Optimierung */
+  .control-bar {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    padding: 12px 16px;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.95);
+  }
+
+  .volume-control {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  /* Verbesserte Touch-Targets */
+  .control-bar button,
+  .video-controls button {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 10px;
+  }
+
+  /* Grip Handle Verbesserungen */
+  .control-grip {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+/* Portrait Mode Specific */
+@media (max-width: 768px) and (orientation: portrait) {
+  .teletext-content {
+    padding-bottom: 120px;
+  }
+}
+
+/* Landscape Mode Specific */
+@media (max-width: 768px) and (orientation: landscape) {
+  .teletext-overlay {
+    padding: 16px 16px 80px 16px;
+  }
+
+  .teletext-header {
+    margin: -16px -16px 16px -16px;
+  }
+
+  .control-bar {
+    padding: 8px 16px;
+  }
+
+  .control-grip {
+    height: 24px;
+  }
+}
+
+/* Größere Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .teletext-overlay {
+    padding: 30px;
+  }
+
+  .teletext-content {
+    max-width: 700px;
+  }
+}
+
+/* Channel Guide Styles */
+.channel-guide {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.channel-guide.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.channel-list {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.channel-list-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.channel-list-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.channel-list-item.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-left: 3px solid #00f0ff;
+}
+
+.channel-number-badge {
+  background: rgba(255, 255, 255, 0.1);
+  color: #00f0ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: 'VT323', monospace;
+  font-size: 18px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.channel-details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.channel-name {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.current-show {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.program-grid {
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.program-grid-header {
+  margin-bottom: 24px;
+}
+
+.program-grid-header h2 {
+  font-size: 24px;
+  color: white;
+  margin-bottom: 8px;
+}
+
+.program-grid-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.program-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 16px;
+  transition: all 0.2s ease;
+}
+
+.program-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+.program-time {
+  color: #00f0ff;
+  font-family: monospace;
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.program-title {
+  color: white;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+  .channel-guide {
+    grid-template-columns: 1fr;
+  }
+
+  .channel-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    max-height: 40vh;
+  }
+
+  .channel-list-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .program-grid {
+    max-height: 60vh;
+  }
+}
+
+/* Kanalübersicht im Teletext */
+.all-channels-overview {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.all-channels-overview h3 {
+  color: #00f0ff;
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.channels-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.channel-row {
+  display: flex;
+  gap: 20px;
+  padding: 12px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.channel-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.channel-row.active {
+  background: rgba(0, 240, 255, 0.1);
+  border-left: 3px solid #00f0ff;
+}
+
+.channel-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 150px;
+}
+
+.channel-number {
+  font-family: 'VT323', monospace;
+  color: #00f0ff;
+  font-size: 16px;
+}
+
+.program-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.now-playing, .next-up {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.now-playing .time, .next-up .time {
+  color: rgba(255, 255, 255, 0.5);
+  min-width: 60px;
+}
+
+.now-playing .title, .next-up .title {
+  color: rgba(255, 255, 255, 0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.next-up .title {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Mobile Anpassungen */
+@media (max-width: 768px) {
+  .all-channels-overview {
+    margin-top: 20px;
+    padding: 16px;
+  }
+
+  .channel-info {
+    min-width: 100px;
+  }
+
+  .channel-row {
+    padding: 10px;
+    gap: 12px;
+  }
+
+  .now-playing, .next-up {
+    font-size: 11px;
+  }
+
+  .now-playing .time, .next-up .time {
+    min-width: 50px;
+  }
+}
